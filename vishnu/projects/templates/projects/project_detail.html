@@ -1,0 +1,349 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Project Details Card -->
+            <div class="card shadow-lg border-0 rounded-lg p-3">
+                <div class="card-body">
+                    <h2 class="card-title text-center">{{ project.title }}</h2>
+                    <hr>
+                    <p><strong>Description:</strong> {{ project.description }}</p>
+                    <p><strong>Location:</strong> {{ project.location }}</p>
+                    <p><strong>Skills Required:</strong> {{ project.skills_required }}</p>
+                    <p><strong>Time Commitment:</strong> {{ project.time_commitment }}</p>
+                    <p><strong>Created By:</strong> {{ project.created_by.username }}</p>
+                    <p><strong>Created On:</strong> {{ project.created_at|date:"F d, Y" }}</p>
+                </div>
+            </div>
+
+            <!-- Join Project Section -->
+            {% if user.is_authenticated %}
+            <div class="card shadow-lg border-0 rounded-lg p-3 mt-4">
+                <div class="card-body">
+                    <h4 class="text-center">Join This Project</h4>
+                    <form method="post" action="{% url 'projects:join_project' project.id %}">
+                        {% csrf_token %}
+                        <!-- Custom Radio Buttons for Participation Type -->
+                        <div class="radio-input mt-3">
+                            <label class="label">
+                                <input type="radio" id="attending" name="participation_type" value="attending"
+                                    checked />
+                                <p class="text">Attending</p>
+                            </label>
+                            <label class="label">
+                                <input type="radio" id="volunteering" name="participation_type" value="volunteering" />
+                                <p class="text">Volunteering</p>
+                            </label>
+                        </div>
+
+                        <!-- Submit Button 
+                        <button type="submit" class="btn btn-primary mt-3">Join This Project</button>-->
+
+                        <button type="submit" class="btn btn-primary btn-block mt-3">
+                            Join Now
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% else %}
+            <p class="text-center mt-3">You need to be logged in to join the project.</p>
+            {% endif %}
+
+
+            <!-- Comment Section -->
+            <div class="card shadow-lg border-0 rounded-lg p-3 mt-4">
+                <div class="card-body">
+                    <h4 class="text-center">Comments</h4>
+
+                    <!-- Comment List -->
+                    <div class="comments-list mt-3">
+                        {% if comments %}
+                        {% for comment in comments %}
+                        <div class="comment mb-3 {% if forloop.counter > 3 %}d-none{% endif %}">
+                            <div class="d-flex align-items-center">
+                                <strong class="me-2">{{ comment.user.username }}</strong>
+                                <small class="text-muted">{{ comment.created_at|date:"F d, Y H:i" }}</small>
+                            </div>
+                            <p class="mb-0">{{ comment.content }}</p>
+                            <!-- Divider -->
+                            {% if forloop.counter <= 3 or not forloop.last %} <hr class="comment-divider my-2">
+                                {% endif %}
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <p class="text-center">No comments yet. Be the first to comment!</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Show More / Show Less Buttons -->
+                    {% if comments|length > 3 %}
+                    <div class="text-end mt-3">
+                        <button id="showMoreBtn" class="btn btn-outline-primary btn-sm">Show More</button>
+                        <button id="showLessBtn" class="btn btn-outline-secondary btn-sm d-none">Show Less</button>
+                    </div>
+                    {% endif %}
+
+                    <!-- Comment Form (for logged-in users) -->
+                    {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'projects:project_detail' project.id %}" id="commentForm"
+                        class="mt-4">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <textarea name="content" class="form-control" rows="3" placeholder="Add a comment..."
+                                required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Post Comment</button>
+                    </form>
+                    {% else %}
+                    <p class="text-center mt-3">You need to <a href="{% url 'login' %}">log in</a> to leave a comment.
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- JavaScript for Show More / Show Less -->
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    let comments = document.querySelectorAll(".comment");
+                    let showMoreBtn = document.getElementById("showMoreBtn");
+                    let showLessBtn = document.getElementById("showLessBtn");
+            
+                    if (showMoreBtn && showLessBtn) {
+                        showMoreBtn.addEventListener("click", function () {
+                            let hiddenComments = Array.from(comments).filter(comment => comment.classList.contains("d-none")).slice(0, 3);
+                            hiddenComments.forEach((comment, index) => {
+                                comment.classList.remove("d-none");
+            
+                                // Add divider if it's not the last comment
+                                if (index !== hiddenComments.length - 1) {
+                                    let hr = document.createElement("hr");
+                                    hr.classList.add("extra-divider", "my-2");
+                                    comment.after(hr);
+                                }
+                            });
+            
+                            if (Array.from(comments).every(comment => !comment.classList.contains("d-none"))) {
+                                showMoreBtn.classList.add("d-none");
+                            }
+                            showLessBtn.classList.remove("d-none");
+                        });
+            
+                        showLessBtn.addEventListener("click", function () {
+                            Array.from(comments).forEach((comment, index) => {
+                                if (index >= 3) {
+                                    comment.classList.add("d-none");
+                                }
+                            });
+            
+                            // Remove only the extra dividers added dynamically
+                            document.querySelectorAll(".extra-divider").forEach(divider => divider.remove());
+            
+                            showMoreBtn.classList.remove("d-none");
+                            showLessBtn.classList.add("d-none");
+                        });
+            
+                        if (Array.from(comments).every(comment => !comment.classList.contains("d-none"))) {
+                            showMoreBtn.classList.add("d-none");
+                        }
+                    }
+                });
+            </script>
+            
+
+
+
+
+            <!-- Upcoming Events Section -->
+            <div class="card shadow-lg border-0 rounded-lg p-3 mt-4">
+                <div class="card-body">
+                    <h4 class="text-center">Upcoming Events</h4>
+                    {% if project.events.exists %}
+                    <ul class="list-group mt-3">
+                        {% for event in project.events.all %}
+                        <li class="list-group-item">
+                            <strong>{{ event.name }}</strong><br>
+                            <p><strong>Description:</strong> {{ event.description }}</p>
+                            <p><strong>Date:</strong> {{ event.date|date:"F d, Y H:i" }}</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p class="text-center">No upcoming events for this project.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Notifications Section -->
+            {% if user.is_authenticated %}
+            <div class="card shadow-lg border-0 rounded-lg p-3 mt-4">
+                <div class="card-body">
+                    <h4 class="text-center">Notifications</h4>
+                    {% for notification in unread_notifications %}
+                    <div class="alert alert-info">
+                        <p>{{ notification.message }}</p>
+                        <p><small>Posted on: {{ notification.created_at|date:"F d, Y H:i" }}</small></p>
+                    </div>
+                    {% empty %}
+                    <p class="text-center">No new notifications.</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Back to Projects Button -->
+            <div class="text-center mt-4">
+                <a href="{% url 'projects:project_list' %}" class="btn btn-secondary">
+                    Back to Projects
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom CSS -->
+<style>
+    .card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        transition: 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    .radio-input {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .radio-input * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+
+    .radio-input label {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 0px 20px;
+        width: 220px;
+        cursor: pointer;
+        height: 50px;
+        position: relative;
+    }
+
+    .radio-input label::before {
+        position: absolute;
+        content: "";
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 220px;
+        height: 45px;
+        z-index: -1;
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        border-radius: 10px;
+        border: 2px solid transparent;
+    }
+
+    .radio-input label:hover::before {
+        transition: all 0.2s ease;
+        background-color: #2a2e3c;
+    }
+
+    .radio-input .label:has(input:checked)::before {
+        background-color: #2d3750;
+        border-color: #435dd8;
+        height: 50px;
+    }
+
+    .radio-input .label .text {
+        color: #000000;
+    }
+
+    .radio-input .label input[type="radio"] {
+        background-color: #202030;
+        appearance: none;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .radio-input .label input[type="radio"]:checked {
+        background-color: #435dd8;
+        -webkit-animation: puls 0.7s forwards;
+        animation: pulse 0.7s forwards;
+    }
+
+    .radio-input .label input[type="radio"]:before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        transition: all 0.1s cubic-bezier(0.165, 0.84, 0.44, 1);
+        background-color: #000000;
+        transform: scale(0);
+    }
+
+    .radio-input .label input[type="radio"]:checked::before {
+        transform: scale(1);
+    }
+
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+        }
+
+        70% {
+            box-shadow: 0 0 0 8px rgba(255, 255, 255, 0);
+        }
+
+        100% {
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+        }
+    }
+
+
+
+    .media {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .media h6 {
+        font-weight: bold;
+    }
+
+    .media p {
+        margin: 0;
+    }
+
+    .media small {
+        color: gray;
+    }
+</style>
+{% endblock %}

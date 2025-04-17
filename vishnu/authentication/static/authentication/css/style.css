@@ -1,0 +1,152 @@
+/* Background Image */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Split Screen Layout */
+.register-container {
+    display: flex;
+    height: 100vh;
+    width: 100%; /* Ensure the container takes full width */
+}
+
+/* Left side for the image */
+
+
+
+.left-side {
+    flex: 1; /* Take up equal space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Prevent any overflow */
+}
+
+.left-side-image {
+    width: 100%; /* Ensure the image fills the width */
+    height: 100%; /* Ensure the image fills the height */
+    object-fit: cover; /* Scale the image to cover the area, cropping if necessary */
+}
+
+/* Right side for the form */
+.right-side {
+    flex: 1; /* Take up equal space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f9f9f9;
+    overflow: hidden; /* Prevent any overflow */
+}
+
+.register-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 60px;
+    border-radius: 15px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+    width: 120%;
+    max-width: 500px;
+    min-height: auto;
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.register-card h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Form Styling */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.form-group input,
+.form-group select {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #af0808;
+    outline: none;
+}
+
+button {
+    margin-top: 25px;
+    padding: 12px 20px;
+    background-color: #af0808;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Links */
+.register-card p {
+    text-align: center;
+    font-size: 1rem;
+    color: #555;
+}
+
+.register-card a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #af0808;
+}
+
+.register-card a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .register-container {
+        flex-direction: column; /* Stack the sides on smaller screens */
+    }
+
+    .left-side {
+        height: 200px; /* Set a fixed height for small screens */
+        background-size: cover;
+    }
+
+    .right-side {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .register-card {
+        padding: 20px;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 10px;
+    }
+
+    button {
+        padding: 10px;
+    }
+}

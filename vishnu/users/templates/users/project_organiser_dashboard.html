@@ -1,0 +1,304 @@
+{% extends 'base.html' %}
+
+{% block title %}Project Organizer Dashboard{% endblock %}
+
+{% block content %}
+<!-- Custom Container for Styling -->
+<div class="dashboard-container">
+    
+    <div class="container section-title" data-aos="fade-up">
+        <span>Welcome<br></span>
+        <h2>Welcome, {{ user.username }}!<br></h2>
+        <p>Here are your projects: Great Work!!</p>
+      </div><!-- End Section Title -->
+
+      {% for project in projects %}
+      <div class="project-card">
+          <div class="project-header">
+              <h2>{{ project.title }}</h2>
+              <p class="project-meta">Created on: {{ project.created_at|date:"F d, Y" }}</p>
+          </div>
+          <div class="project-body">
+              <p><strong>📍 Location:</strong> {{ project.location }}</p>
+              <p><strong>🛠️ Skills Required:</strong> {{ project.skills_required }}</p>
+              <p><strong>⏳ Time Commitment:</strong> {{ project.time_commitment }}</p>
+              <p><strong>📝 Description:</strong> {{ project.description }}</p>
+
+              <div class="volunteers-section">
+                  <h3>👥 Volunteers Joined:</h3>
+                  <ul class="volunteers-list" data-project-id="{{ project.id }}">
+                      {% for participation in project.projectparticipation_set.all %}
+                          {% comment %} Add a class "hidden-volunteer" for items beyond the 4th {% endcomment %}
+                          <li class="volunteer-item {% if forloop.counter > 4 %}hidden-volunteer{% endif %}">
+                              <a href="{% url 'volunteer_profile' participation.user.id %}" class="volunteer-link">
+                                  {{ participation.user.username }}
+                              </a>
+                              <span class="participation-type">
+                                  {% if participation.participation_type == 'volunteering' %}
+                                      <strong>🎯 Volunteering</strong>
+                                      {% if participation.skills %}
+                                          (Skills: {{ participation.skills }})
+                                      {% endif %}
+                                  {% else %}
+                                      <strong>🎟️ Attending</strong>
+                                  {% endif %}
+                              </span>
+                          </li>
+                      {% empty %}
+                          <li class="no-volunteers">No volunteers yet. 🙁</li>
+                      {% endfor %}
+                  </ul>
+                  {% comment %} Only show the toggle button if there are more than 4 volunteers {% endcomment %}
+                  {% if project.projectparticipation_set.count > 4 %}
+                      <button class="toggle-volunteers-btn" data-project-id="{{ project.id }}">Show More ▼</button>
+                  {% endif %}
+              </div>
+          </div>
+          <div class="project-footer">
+              <a href="{% url 'projects:update_project' project.id %}" class="btn btn-edit">✏️ Edit</a>
+              <a href="{% url 'projects:delete_project' project.id %}" class="btn btn-delete">🗑️ Delete</a>
+          </div>
+      </div>
+  {% empty %}
+      <p class="no-projects">No projects found. Create one to get started! 🚀</p>
+  {% endfor %}
+</div>
+
+<!-- Custom CSS -->
+<style>
+    /* Styling the Dashboard Container */
+    .dashboard-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    /* Dashboard Title and Subtitle */
+    .dashboard-title {
+        font-size: 2.5rem;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .dashboard-subtitle {
+        font-size: 1.2rem;
+        color: #666;
+        margin-bottom: 30px;
+    }
+
+    /* Project Card Styling */
+    .project-card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        overflow: hidden;
+    }
+
+    .project-header {
+        background-color: #242424;
+        color: white;
+        padding: 20px;
+    }
+
+    .project-header h2 {
+        margin: 0;
+        font-size: 1.8rem;
+        color:#ffffff
+    }
+
+    .project-meta {
+        margin: 5px 0 0;
+        font-size: 0.9rem;
+        opacity: 0.9;
+    }
+
+    .project-body {
+        padding: 20px;
+    }
+
+    .project-body p {
+        margin-bottom: 15px;
+        font-size: 1rem;
+        color: #444;
+    }
+
+    .project-body strong {
+        color: #df1529;
+    }
+
+    /* Volunteers Section Styling */
+    .volunteers-section {
+        margin-top: 20px;
+    }
+
+    .volunteers-section h3 {
+        font-size: 1.4rem;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .volunteers-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .volunteer-item {
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .volunteer-link {
+        color: #df1529;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .volunteer-link:hover {
+        text-decoration: underline;
+    }
+
+    .participation-type {
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    .no-volunteers {
+        color: #666;
+        font-style: italic;
+    }
+
+    /* Project Footer Styling */
+    .project-footer {
+        background-color: #f9f9f9;
+        padding: 15px 20px;
+        text-align: right;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-edit {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        margin-right: 10px;
+    }
+
+    .btn-edit:hover {
+        background-color: #218838;
+    }
+
+    .btn-delete {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+    }
+
+    .btn-delete:hover {
+        background-color: #c82333;
+    }
+
+    /* No Projects Message */
+    .no-projects {
+        font-size: 1.2rem;
+        color: #666;
+        text-align: center;
+        margin-top: 40px;
+    }
+
+
+    .hidden-volunteer {
+    display: none;
+}
+
+.show-more-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.show-more-btn:hover {
+    background-color: #0056b3;
+}
+
+
+    /* Responsive Design for Mobile */
+    @media screen and (max-width: 768px) {
+        .dashboard-title {
+            font-size: 2rem;
+        }
+
+        .project-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .project-body p {
+            font-size: 0.9rem;
+        }
+
+        .volunteers-section h3 {
+            font-size: 1.2rem;
+        }
+
+        .volunteer-item {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .participation-type {
+            margin-top: 5px;
+        }
+    }
+</style>
+
+<!-- JavaScript to handle toggle -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // For each toggle button, add a click event listener
+        const toggleButtons = document.querySelectorAll(".toggle-volunteers-btn");
+        toggleButtons.forEach(function(button) {
+            button.addEventListener("click", function() {
+                const projectId = this.getAttribute("data-project-id");
+                const volunteerList = document.querySelector('.volunteers-list[data-project-id="' + projectId + '"]');
+                // Get all volunteer items that are hidden
+                const hiddenItems = volunteerList.querySelectorAll(".volunteer-item.hidden-volunteer");
+                const isHidden = Array.from(hiddenItems).some(item => item.style.display === "none" || item.style.display === "");
+                
+                if (isHidden) {
+                    // Show all hidden volunteer items
+                    hiddenItems.forEach(function(item) {
+                        item.style.display = "flex";
+                    });
+                    this.textContent = "Show Less ▲";
+                } else {
+                    // Hide all volunteer items after the 4th
+                    hiddenItems.forEach(function(item) {
+                        item.style.display = "none";
+                    });
+                    this.textContent = "Show More ▼";
+                    // Optionally, scroll back to the top of the volunteer list
+                    volunteerList.scrollIntoView({ behavior: "smooth" });
+                }
+            });
+        });
+    });
+</script>
+
+
+{% endblock %}

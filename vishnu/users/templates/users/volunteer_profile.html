@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ volunteer.username }}'s Profile{% endblock %}
+
+{% block content %}
+<!-- Custom Container for Styling -->
+<div class="profile-container">
+    <div class="profile-card">
+        <div class="profile-header">
+            <h2>🌟 {{ volunteer.username }}'s Profile 🌟</h2>
+            <p class="profile-subtitle">"Great things are done by a series of small things brought together." – Vincent Van Gogh</p>
+        </div>
+        <div class="profile-body">
+            <div class="profile-info">
+                <p><strong>📧 Email:</strong> {{ volunteer.email }}</p>
+                <p><strong>🎂 Date of Birth:</strong> {{ volunteer.dob|default:"Not provided" }}</p>
+                <p><strong>📍 Location:</strong> {{ volunteer.location|default:"Not provided" }}</p>
+                <p><strong>🛠️ Skills:</strong> {{ volunteer.skills|default:"No skills listed" }}</p>
+                <p><strong>📈 Experience:</strong> {{ volunteer.experience }} years</p>
+                <p><strong>🎖️ Organizer Status:</strong> {% if volunteer.is_organizer %} Yes ✅ {% else %} No ❌ {% endif %}</p>
+            </div>
+        </div>
+        <div class="profile-footer">
+            <a href="{% url 'organiser_dashboard' %}" class="btn btn-back">🔙 Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+
+<!-- Custom CSS -->
+<style>
+    /* Styling the Profile Container */
+    .profile-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    /* Profile Card Styling */
+    .profile-card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    /* Profile Header Styling */
+    .profile-header {
+        background-color: #df1529;
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .profile-header h2 {
+        margin: 0;
+        font-size: 2rem;
+    }
+
+    .profile-subtitle {
+        font-style: italic;
+        font-size: 1rem;
+        opacity: 0.9;
+        margin-top: 10px;
+    }
+
+    /* Profile Body Styling */
+    .profile-body {
+        padding: 20px;
+    }
+
+    .profile-info {
+        font-size: 1.1rem;
+        color: #444;
+    }
+
+    .profile-info p {
+        margin-bottom: 15px;
+    }
+
+    .profile-info strong {
+        color: #df1529;
+    }
+
+    /* Profile Footer Styling */
+    .profile-footer {
+        background-color: #f9f9f9;
+        padding: 15px 20px;
+        text-align: center;
+    }
+
+    .btn-back {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        text-decoration: none;
+    }
+
+    .btn-back:hover {
+        background-color: #5a6268;
+    }
+
+    /* Responsive Design for Mobile */
+    @media screen and (max-width: 768px) {
+        .profile-container {
+            padding: 15px;
+        }
+
+        .profile-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .profile-info {
+            font-size: 1rem;
+        }
+
+        .btn-back {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}

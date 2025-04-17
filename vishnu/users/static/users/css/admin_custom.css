@@ -1,0 +1,23 @@
+/* Hide the entire Groups field row */
+.form-row.field-groups {
+    display: none !important;
+}
+
+
+
+/* Hide Groups field */
+#id_groups {
+    display: none !important;
+}
+
+/* Change the background color */
+body {
+    background-color: #f4f4f4;
+}
+
+/* Custom admin panel header */
+div.breadcrumbs {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px;
+}

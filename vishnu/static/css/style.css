@@ -1,0 +1,642 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    padding: 0 5%;
+    position: absolute;
+    width: 100%;
+    z-index: 100;
+}
+
+header h1 {
+    font-size: 40px;
+    color: white;
+}
+
+header nav {
+    display: flex;
+    gap: 30px;
+}
+
+header nav a {
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 99px;
+    transition: 0.3s;
+    color: white;
+}
+
+header nav a.active {
+    background: #4CAF50;
+}
+
+header nav a:hover {
+    background: #4CAF50;
+}
+
+header nav:hover > a:not(:hover) {
+    background: none;
+}
+
+.home {
+    display: flex;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.home::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("/static/images/images6.jpg") center center / cover no-repeat; /* Background image */
+    background-attachment: fixed; /* Parallax effect */
+    filter: blur(4px); /* Apply blur effect */
+    z-index: -1; /* Keep the pseudo-element behind the content */
+}
+
+.home img {
+    position: absolute;
+    pointer-events: none;
+    transition: all 0.3s ease-in-out;
+    border-radius: 12px;
+}
+
+.stock1, .stock2, .chart1, .chart2, .graph1, .graph2 {
+    width: 220px; /* Smaller size for stickers */
+    height: 220px; /* Same size for width and height to make them square */
+    object-fit: cover;
+}
+
+.stock1 {
+    bottom: 60%;
+    left: 15%;
+}
+
+.stock2 {
+    bottom: 30%;
+    right: 80%;
+}
+
+.chart1 {
+    bottom: 55%;
+    right: 15%;
+}
+
+.chart2 {
+    bottom: 5%;
+    left: 70%;
+}
+
+.graph1 {
+    bottom: 30%;
+    left: 80%;
+}
+
+.graph2 {
+    bottom: 10%;
+    right: 70%;
+}
+
+.home .title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 80px;
+    text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3);
+}
+
+.about {
+    padding: 50px;
+    background: #3A3E56;
+    color: white;
+    position: relative;
+    z-index: 100;
+}
+
+.about h1 {
+    font-size: 40px;
+}
+
+/* Market Trends Section */
+.market-trends {
+    padding: 50px;
+    background: #000000;  /* Updated background color */
+    color: white;
+    text-align: center;
+}
+
+.market-trends h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+.trends-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* Card Styles */
+.card {
+    position: relative;
+    width: 390px;
+    height: 300px;
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: rgba(126, 80, 177, 0.2) 0 15px 30px -5px;
+    background-image: linear-gradient(144deg, #eeeeee, #4ea76d 50%, #4ed486); /* Updated gradient */
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card__content {
+    background: rgb(6, 49, 122);
+    border-radius: 17px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.trend-icon {
+    width: 120px; /* Increased icon size */
+    height: 120px; /* Increased icon size */
+    margin-bottom: 40px; /* Adjusted spacing */
+}
+
+.card h3 {
+    font-size: 28px; /* Slightly reduced font size */
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.card p {
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+}
+
+/* Fade-in and fade-out effects */
+.fade-in {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+}
+
+/* Media Query for responsive design */
+@media screen and (max-width: 768px) {
+    .trends-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .card {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+}
+
+
+
+
+
+/* Analytics Section */
+.analytics {
+    background: linear-gradient(135deg, #dbdbff, #536dff); /* Soft gradient background */
+    color: #000000;
+    text-align: center;
+    padding: 50px 0;
+}
+
+.analytics h2 {
+    font-size: 2.5rem;
+    color: #000000; /* Primary color */
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+.analytics p {
+    font-size: 18px;
+    margin-bottom: 40px;
+}
+
+.analytics-icons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.trend-icon {
+    font-size: 60px; /* Adjust the size of icons */
+    color: rgb(12, 12, 12);
+    transition: transform 0.3s;
+}
+
+.trend-icon:hover {
+    transform: scale(1.2); /* Icon hover effect */
+}
+
+/* From Uiverse.io by AlimurtuzaCodes */
+.btn {
+    border: 2px solid #24cb32; /* Add a visible border for the button */
+    width: 15em;
+    height: 5em;
+    border-radius: 3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    background: rgb(0, 0, 0); /* Initial state is transparent */
+    cursor: pointer;
+    transition: all 450ms ease-in-out;
+}
+
+.sparkle {
+    fill: #24cb32; /* Color for the sparkle in the initial state */
+    transition: all 800ms ease;
+}
+
+.text {
+    font-weight: 600;
+    color: #12055d; /* Text color matches the border */
+    font-size: medium;
+}
+
+.btn:hover {
+    background: linear-gradient(0deg, #75ff81, #38fe06); /* Add gradient background on hover */
+    box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.4),
+        inset 0px -4px 0px 0px rgba(0, 0, 0, 0.2),
+        0px 0px 0px 4px rgba(255, 255, 255, 0.2),
+        0px 0px 180px 0px #17ff32;
+    transform: translateY(-2px);
+}
+
+.btn:hover .text {
+    color: rgb(0, 13, 133); /* Change text color on hover */
+}
+
+.btn:hover .sparkle {
+    fill: rgb(255, 255, 255); /* Change sparkle color on hover */
+    transform: scale(1.2);
+}
+
+
+/* Services Section */
+/* Services Section */
+.services {
+    background:#ffffff; /* Soft gradient background */
+    color: #2100f6;
+    text-align: center;
+    padding: 60px 20px;
+}
+
+/* Title Styling */
+.services h2 {
+    font-size: 2.5rem;
+    color: #007bff; /* Primary color */
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+/* Container to Align Service Cards */
+.services-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two cards per row */
+    gap: 30px;
+    padding: 0 10%;
+    box-sizing: border-box;
+}
+
+/* Individual Service Cards */
+.service-card {
+    background: rgb(6, 49, 122);
+    color: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+/* Service Card Hover Effect */
+.service-card:hover {
+    transform: translateY(-10px) scale(1.05); /* Pop-up effect */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Service Card Heading */
+.service-card h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+/* Service Card Paragraph */
+.service-card p {
+    font-size: 16px;
+}
+
+/* Responsive Layout for Small Screens */
+@media screen and (max-width: 768px) {
+    .services-container {
+        grid-template-columns: 1fr; /* One card per row on smaller screens */
+        padding: 0 5%;
+    }
+}
+
+
+
+/*  Contact Section */
+/* Contact Section */
+.contact {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300px; /* Adjust height to make it a small rectangle */
+    padding: 20px;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.4); /* Background color for the overlay */
+    color: white;
+    text-align: center;
+}
+
+/* Parallax effect */
+.contact::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("/static/images/images1.jpg") center center / cover no-repeat; /* Background image */
+    background-attachment: fixed; /* Parallax effect */
+    filter: blur(4px); /* Apply blur effect */
+    z-index: -1; /* Keeps the pseudo-element behind the content */
+}
+
+/* Custom Button Styles */
+.button {
+    height: 50px;
+    width: 200px;
+    position: relative;
+    background-color: transparent;
+    cursor: pointer;
+    border: 2px solid #252525;
+    overflow: hidden;
+    border-radius: 30px;
+    color: #0fae21;
+    transition: all 0.5s ease-in-out;
+}
+
+.btn-txt {
+    z-index: 1;
+    font-weight: 800;
+    letter-spacing: 4px;
+}
+
+.type1::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: all 0.5s ease-in-out;
+    background-color: #107203;
+    border-radius: 30px;
+    visibility: hidden;
+    height: 10px;
+    width: 10px;
+    z-index: -1;
+}
+
+.button:hover {
+    box-shadow: 1px 1px 200px #33cb5c;
+    color: #fff;
+    border: none;
+}
+
+.type1:hover::after {
+    visibility: visible;
+    transform: scale(100) translateX(2px);
+}
+
+
+
+
+
+/* Testimonial Reviews Section */
+/* Testimonials Section */
+#testimonials {
+    background-color: #f8f9fa; /* Light grey background */
+    padding: 50px 20px;
+    text-align: center;
+}
+
+#testimonials h2 {
+    font-size: 2.5rem;
+    color: #007bff; /* Primary color */
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+.testimonial-card {
+    background: #007bff; /* White background for cards */
+    box-shadow: 0 8px 16px rgba(142, 134, 255, 0.2); /* Prominent shadow */
+    border-radius: 10px;
+    padding: 30px 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
+    perspective: 1000px; /* Adds 3D perspective */
+}
+
+.testimonial-card:hover {
+    transform: scale(1.05) rotateY(5deg); /* 3D hover effect */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+.testimonial-text {
+    font-size: 1.2rem;
+    color: #ffffff; /* Darker grey for readability */
+    font-style: italic;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.client-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #007bff; /* Primary color */
+}
+
+.client-position {
+    font-size: 1rem;
+    color: #ffffff; /* Muted text */
+}
+
+/* Carousel Controls */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: #007bff; /* Primary color for controls */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-control-prev-icon::after,
+.carousel-control-next-icon::after {
+    font-size: 1.5rem;
+    color: #ffffff;
+}
+
+.carousel-control-prev {
+    left: -60px; /* Positioning controls outside the card */
+}
+
+.carousel-control-next {
+    right: -60px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .testimonial-card {
+        padding: 20px;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        left: 0;
+        right: 0;
+    }
+}
+
+
+
+
+
+/* Footer Section */
+footer {
+    background: #1c1c1c; /* Dark background for footer */
+    color: #ffffff; /* White text for better contrast */
+    padding: 20px 50px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-left, .footer-center, .footer-right {
+    margin: 10px 0;
+}
+
+.footer-left p {
+    margin: 5px 0;
+}
+
+.footer-center a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.footer-center a:hover {
+    color: #00ff40; /* Highlight color on hover */
+}
+
+.footer-right .social-icon {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    background: #ffffff;
+    color: #1c1c1c;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+    transition: transform 0.3s, background 0.3s;
+}
+
+.footer-right .social-icon:hover {
+    background: #00ff40;
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+
+.ticker {
+    background: #1c1c1c; /* Match footer background for consistency */
+    color: #ffffff; /* White text for contrast */
+    padding: 10px 0;
+    overflow: hidden;
+}
+
+.ticker-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+}
+
+.ticker-symbols {
+    display: inline-block;
+    animation: ticker-scroll 10s linear infinite;
+}
+
+.ticker-symbols span {
+    display: inline-block;
+    margin: 0 30px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #00ff40; /* Highlighted text for stock prices */
+}
+
+@keyframes ticker-scroll {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}

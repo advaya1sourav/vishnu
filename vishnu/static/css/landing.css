@@ -1,0 +1,138 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Navbar */
+  #navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    transition: background 0.3s;
+    z-index: 1000;
+  }
+  
+  #navbar.transparent {
+    background: transparent;
+  }
+  
+  #navbar .nav-links {
+    display: flex;
+    justify-content: flex-end;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #navbar .nav-links li {
+    margin-left: 20px;
+  }
+  
+  #navbar .nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  /* Hero Section */
+  #hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    overflow: hidden;
+  }
+  
+  #drone-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+  
+  .hero-content {
+    z-index: 1;
+  }
+  
+  /* Project Functionality Section */
+  #projects {
+    padding: 100px 0;
+    background: #f9f9f9;
+    text-align: center;
+  }
+  
+  .project-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+  }
+  
+  .step {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+  
+  .step.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .project-counter {
+    font-size: 2em;
+    font-weight: bold;
+  }
+  
+  /* Why Join Section */
+  #why-join {
+    padding: 100px 0;
+    background: #fff;
+  }
+  
+  .value-point, .value-image {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+  
+  .value-point.fade-in, .value-image.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Footer */
+  #footer {
+    padding: 50px 0;
+    background: #333;
+    color: white;
+    text-align: center;
+  }
+  
+  .quick-links, .social-links {
+    margin-bottom: 20px;
+  }
+  
+  .quick-links ul, .social-links ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .quick-links a, .social-links a {
+    color: white;
+    text-decoration: none;
+  }

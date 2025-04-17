@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="container section-title" data-aos="fade-up">
+        <span>🌍 Where Ideas Meet Action, Together<br></span>
+        <h2>🌍 Where Ideas Meet Action, Together<br></h2>
+        <p>This is your space to explore, contribute, and create change</p>
+      </div><!-- End Section Title -->
+
+      <form method="GET" id="search-form">
+        <div class="search-bar mb-4 position-relative">
+            <div class="input-group rounded-pill shadow-sm">
+                <span class="input-group-text bg-white border-0">
+                    <i class="fas fa-search text-muted"></i>
+                </span>
+                <input type="search" name="q" id="search-input" class="form-control border-0" placeholder="Search projects..." value="{{ request.GET.q }}">
+    
+                <!-- Filter Button (One Instance) -->
+                <button type="button" class="btn btn-light border-0 rounded-pill" id="filter-btn">
+                    <i class="fas fa-filter"></i> Filters
+                </button>
+    
+                <!-- Search Button -->
+                <button type="submit" class="btn btn-primary border-0 rounded-pill">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+    
+            <!-- Filters Dropdown (Initially Hidden) -->
+            <div class="filters-dropdown" id="filters-dropdown">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Project Name</label>
+                        <input type="search" name="project_name" class="form-control" placeholder="Enter project name" value="{{ request.GET.project_name }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Location</label>
+                        <input type="search" name="location" class="form-control" placeholder="Enter location" value="{{ request.GET.location }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Description</label>
+                        <input type="search" name="description" class="form-control" placeholder="Enter keywords" value="{{ request.GET.description }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Required Skills</label>
+                        <input type="search" name="skills_required" class="form-control" placeholder="Enter skills" value="{{ request.GET.skills_required }}">
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Time Commitment (days)</label>
+                        <input type="range" name="time_commitment" class="form-range" min="0" max="30" value="{{ request.GET.time_commitment|default:0 }}">
+                        <span id="time-commitment-value" class="fw-bold text-primary">{{ request.GET.time_commitment|default:0 }} days</span>
+                    </div>
+                </div>
+                <div class="text-end mt-3">
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fas fa-check"></i> Apply Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+
+    <!-- Project List -->
+    <div id="project-container">
+        {% if projects %}
+        <div class="row">
+            <div class="col-12">
+                {% for project in projects %}
+                <div class="card shadow-sm project-card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.title }}</h5>
+                        <p class="card-text text-muted">{{ project.description|truncatechars:100 }}</p>
+                        <a href="{% url 'projects:project_detail' project.id %}" class="btn btn-primary btn-sm">
+                            View Details <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+        <div class="alert alert-info text-center">
+            <i class="fas fa-folder-open"></i> No projects found.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

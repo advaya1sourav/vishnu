@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<!-- Custom Container for Styling -->
+<div class="profile-container">
+    <div class="profile-card">
+        <div class="profile-header">
+            <h2 class="profile-title">🌟 {{ user.username }}'s Profile 🌟</h2>
+            <p class="profile-quote">"The best way to predict the future is to create it." – Peter Drucker</p>
+        </div>
+        <div class="profile-body">
+            <div class="profile-info">
+                <p><strong>📧 Email:</strong> {{ user.email }}</p>
+                <p><strong>🎂 Date of Birth:</strong> {{ user.dob|date:"F d, Y"|default:"Not specified" }}</p>
+                <p><strong>📍 Location:</strong> {{ user.location|default:"Not specified" }}</p>
+                <p><strong>🛠️ Skills:</strong> {{ user.skills|default:"Not specified" }}</p>
+                <p><strong>📈 Experience:</strong> {{ user.experience|default:"0" }} years</p>
+            </div>
+        </div>
+        <div class="profile-footer">
+            <a href="{% url 'profile_update' %}" class="btn btn-primary">✏️ Update Profile</a>
+        </div>
+    </div>
+</div>
+
+<!-- Custom CSS -->
+<style>
+    /* Styling the Profile Container */
+    .profile-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    /* Profile Card Styling */
+    .profile-card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        text-align: left;
+    }
+
+    /* Profile Header Styling */
+    .profile-header {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .profile-title {
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .profile-quote {
+        font-style: italic;
+        color: #666;
+        font-size: 1rem;
+    }
+
+    /* Profile Body Styling */
+    .profile-body {
+        margin-top: 20px;
+    }
+
+    .profile-info {
+        font-size: 1.1rem;
+        color: #444;
+    }
+
+    .profile-info p {
+        margin-bottom: 15px;
+    }
+
+    .profile-info strong {
+        color: #df1529;
+    }
+
+    /* Profile Footer Styling */
+    .profile-footer {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .btn-primary {
+        background-color: #df1529;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 5px;
+        color: white;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #971c28;
+    }
+
+    /* Responsive Design for Mobile */
+    @media screen and (max-width: 768px) {
+        .profile-container {
+            padding: 15px;
+        }
+
+        .profile-title {
+            font-size: 1.5rem;
+        }
+
+        .profile-info {
+            font-size: 1rem;
+        }
+    }
+</style>
+{% endblock %}

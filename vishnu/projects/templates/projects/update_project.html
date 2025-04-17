@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Project{% endblock %}
+
+{% block content %}
+<!-- Custom Container for Styling -->
+<div class="custom-container mt-4">
+    <div class="container section-title" data-aos="fade-up">
+        <span>UPDATE<br></span>
+        <h2>Update Your Project<br></h2>
+        <p>Refine your project details and keep things up-to-date. Great work continues here! 💡</p>
+    </div><!-- End Section Title -->
+
+    {% if not user.is_approved %}
+        <p>Your account has not been approved by an admin yet.</p>
+    {% else %}
+        <!-- Project Update Form -->
+        <form method="post" id="update-project-form" class="styled-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_title">Project Title</label>
+                <input type="text" name="title" id="id_title" class="form-control" value="{{ form.title.value }}" placeholder="Enter project title" required>
+            </div>
+            <div class="form-group">
+                <label for="id_description">Project Description</label>
+                <textarea name="description" id="id_description" class="form-control" rows="5" placeholder="Describe your project" required>{{ form.description.value }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="id_location">Project Location</label>
+                <input type="text" name="location" id="id_location" class="form-control" value="{{ form.location.value }}" placeholder="Enter project location" required>
+            </div>
+            <div class="form-group">
+                <label for="id_skills_required">Skills Required</label>
+                <textarea name="skills_required" id="id_skills_required" class="form-control" rows="3" placeholder="List the skills required for this project" required>{{ form.skills_required.value }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="id_time_commitment">Time Commitment</label>
+                <input type="text" name="time_commitment" id="id_time_commitment" class="form-control" value="{{ form.time_commitment.value }}" placeholder="e.g., 5 hours/week" required>
+            </div>
+            <button type="submit" name="project_update" class="btn btn-primary">Save Changes</button>
+        </form>
+
+        <h2 class="mt-4"></h2>
+        <div class="container section-title" data-aos="fade-up">
+            <span>EVENT<br></span>
+            <h2>CREATE AN EVENT<br></h2>
+        </div><!-- End Section Title -->
+
+        <!-- Event Creation Form -->
+        <form method="post" id="create-event-form" class="styled-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_name">Event Name</label>
+                <input type="text" name="name" id="id_name" class="form-control" placeholder="Enter event name" required>
+            </div>
+            <div class="form-group">
+                <label for="id_description">Event Description</label>
+                <textarea name="description" id="id_description" class="form-control" rows="5" placeholder="Describe the event" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="id_date">Event Date</label>
+                <input type="datetime-local" name="date" id="id_date" class="form-control" required>
+            </div>
+            <button type="submit" name="event_create" class="btn btn-success">Create Event</button>
+        </form>
+    {% endif %}
+
+    <a href="{% url 'organiser_dashboard' %}" class="btn btn-secondary mt-3">Cancel</a>
+</div> <!-- Closing the div properly -->
+
+<!-- Custom CSS -->
+<style>
+    /* Styling the Custom Container */
+    .custom-container {
+        max-width: 800px;
+        margin: 40px auto; /* Centering */
+        padding: 20px;
+    }
+
+    /* Form Styling */
+    .styled-form {
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .form-control:focus {
+        border-color: #df1529;
+        box-shadow: 0 0 5px rgba(223, 21, 41, 0.5);
+        outline: none;
+    }
+
+    textarea.form-control {
+        height: 150px;
+        resize: vertical;
+    }
+
+    /* Style the Submit Buttons */
+    .btn {
+        padding: 10px 20px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary {
+        background-color: #df1529;
+        border: none;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #971c28;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+        color: white;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    /* Responsive Design for Mobile */
+    @media screen and (max-width: 768px) {
+        .custom-container {
+            padding: 15px;
+        }
+
+        .styled-form {
+            padding: 15px;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+</style>
+
+<!-- Custom JavaScript -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Validation for Project Update Form
+        document.getElementById('update-project-form').addEventListener('submit', function (event) {
+            const title = document.getElementById('id_title');
+            const description = document.getElementById('id_description');
+            const location = document.getElementById('id_location');
+            const skillsRequired = document.getElementById('id_skills_required');
+            const timeCommitment = document.getElementById('id_time_commitment');
+
+            if (!title.value.trim() || !description.value.trim() || !location.value.trim() || !skillsRequired.value.trim() || !timeCommitment.value.trim()) {
+                alert("All fields are required!");
+                event.preventDefault();  // Prevent form submission
+            }
+        });
+
+        // Validation for Event Creation Form
+        document.getElementById('create-event-form').addEventListener('submit', function (event) {
+            const eventName = document.getElementById('id_name');
+            const eventDate = document.getElementById('id_date');
+
+            if (!eventName.value.trim() || !eventDate.value.trim()) {
+                alert("Event Name and Date are required!");
+                event.preventDefault();  // Prevent form submission
+            }
+        });
+    });
+</script>
+{% endblock %}

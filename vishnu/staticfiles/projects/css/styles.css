@@ -1,0 +1,128 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Search Bar */
+.search-bar {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.input-group {
+    background-color: #fff;
+    border-radius: 50px;
+    padding: 5px;
+}
+
+.input-group-text {
+    background-color: transparent;
+    border: none;
+}
+
+#search-input {
+    border: none;
+    box-shadow: none;
+}
+
+#filter-button {
+    background-color: #f8f9fa;
+    border-radius: 50px;
+    padding: 8px 16px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+#filter-button:hover {
+    background-color: #e9ecef;
+}
+
+/* Filters Dropdown */
+.filters-dropdown {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: none; /* Hidden by default */
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    padding: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+/* Show the dropdown when active */
+.filters-dropdown.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Time Commitment Slider */
+#time-commitment {
+    width: 100%;
+}
+
+#time-commitment-value {
+    font-weight: bold;
+    color: #007bff;
+}
+
+/* Project Card Styles */
+.project-card {
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+/* Hide project cards by default (if needed) */
+.project-card {
+    display: block; /* Ensure cards are visible by default */
+}
+
+/* Add smooth transitions for filtering */
+.project-card {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.project-card.hidden {
+    display: none; /* Hide cards that don't match the filters */
+}
+
+
+/* Loading Spinner */
+#loading-spinner .spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+    .search-bar {
+        max-width: 100%;
+    }
+
+    #filters-dropdown {
+        max-width: 100%;
+    }
+}

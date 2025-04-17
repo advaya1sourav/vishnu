@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Admin Panel</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Users</h5>
+                    <p class="card-text">Total Users: {{ users.count }}</p>
+                    <a href="{% url 'admin:users_customuser_changelist' %}">Manage Users</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Groups</h5>
+                    <p class="card-text">Total Groups: {{ groups.count }}</p>
+                    <a href="{% url 'admin:auth_group_changelist' %}">Manage Groups</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Content Types</h5>
+                    <p class="card-text">Total Content Types: {{ content_types.count }}</p>
+                    <a href="{% url 'admin:contenttypes_contenttype_changelist' %}" class="btn btn-primary">View Content Types</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <h4>Sessions</h4>
+        <p>Total Active Sessions: {{ sessions.count }}</p>
+        <a href="{% url 'admin:sessions_session_changelist' %}" class="btn btn-secondary">Manage Sessions</a>
+    </div>
+</div>
+{% endblock %}

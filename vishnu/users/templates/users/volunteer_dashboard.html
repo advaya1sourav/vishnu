@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% block title %}Volunteer Dashboard{% endblock %}
+
+{% block content %}
+<!-- Custom Container for Styling -->
+<div class="dashboard-container">
+    
+
+    <div class="container section-title" data-aos="fade-up">
+        <span>HELLO<br></span>
+        <h2>Welcome, {{ user.username }}! 👋<br></h2>
+        <p>Here are the projects you have joined:</p>
+      </div><!-- End Section Title -->
+
+    {% if joined_projects %}
+        {% for project in joined_projects %}
+            <div class="project-card">
+                <div class="project-header">
+                    <h2><a href="{% url 'projects:project_detail' project.id %}" class="project-link">{{ project.title }}</a></h2>
+                    <p class="project-meta">Created by: {{ project.created_by.username }} on {{ project.created_at|date:"F d, Y" }}</p>
+                </div>
+                <div class="project-body">
+                    <p><strong>📍 Location:</strong> {{ project.location }}</p>
+                    <p><strong>🛠️ Skills Required:</strong> {{ project.skills_required }}</p>
+                    <p><strong>⏳ Time Commitment:</strong> {{ project.time_commitment }}</p>
+                    <p><strong>📝 Description:</strong> {{ project.description }}</p>
+                </div>
+                <div class="project-footer">
+                    <form action="{% url 'projects:leave_project' project.id %}" method="post" onsubmit="return confirm('Are you sure you want to leave this project?');">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-leave">🚪 Leave Project</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="no-projects">You have not joined any projects yet. 🚀</p>
+    {% endif %}
+</div>
+
+<!-- Custom CSS -->
+<style>
+    /* Styling the Dashboard Container */
+    .dashboard-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    /* Dashboard Title and Subtitle */
+    .dashboard-title {
+        font-size: 2.5rem;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .dashboard-subtitle {
+        font-size: 1.2rem;
+        color: #666;
+        margin-bottom: 30px;
+    }
+
+    /* Project Card Styling */
+    .project-card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        overflow: hidden;
+    }
+
+    .project-header {
+        background-color: #242424;
+        color: white;
+        padding: 20px;
+    }
+
+    .project-header h2 {
+        margin: 0;
+        font-size: 1.8rem;
+    }
+
+    .project-link {
+        color: white;
+        text-decoration: none;
+    }
+
+    .project-link:hover {
+        text-decoration: underline;
+    }
+
+    .project-meta {
+        margin: 5px 0 0;
+        font-size: 0.9rem;
+        opacity: 0.9;
+    }
+
+    .project-body {
+        padding: 20px;
+    }
+
+    .project-body p {
+        margin-bottom: 15px;
+        font-size: 1rem;
+        color: #444;
+    }
+
+    .project-body strong {
+        color: #df1529;
+    }
+
+    /* Project Footer Styling */
+    .project-footer {
+        background-color: #f9f9f9;
+        padding: 15px 20px;
+        text-align: right;
+    }
+
+    .btn-leave {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-leave:hover {
+        background-color: #c82333;
+    }
+
+    /* No Projects Message */
+    .no-projects {
+        font-size: 1.2rem;
+        color: #666;
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    /* Responsive Design for Mobile */
+    @media screen and (max-width: 768px) {
+        .dashboard-title {
+            font-size: 2rem;
+        }
+
+        .project-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .project-body p {
+            font-size: 0.9rem;
+        }
+
+        .btn-leave {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
