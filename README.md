@@ -1,3 +1,7 @@
+# VISHNU
+
+Volunteer Integration for Social Help, Networking, and Upliftment
+
 Project Overview
 VISHNU is an online platform designed to connect volunteers with community projects and initiatives.
 It helps volunteers find relevant opportunities and enables organizers to recruit the right people easily.
